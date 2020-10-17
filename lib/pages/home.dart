@@ -39,6 +39,7 @@ class _HomeState extends State<Home> {
   ProgressDialog progressDialog;
   TextEditingController _controllerTrackingId = TextEditingController();
   TextEditingController _controllerLabel = TextEditingController();
+  double _shadow = 8;
 
   @override
   Widget build(BuildContext context) {
@@ -226,12 +227,14 @@ class _HomeState extends State<Home> {
                       setState(() {
                         _color1 = Colors.green;
                         _color2 = Colors.blue[200];
+                        _shadow = 0;
                       });
                     },
                     onTapUp: (_) async {
                       setState(() {
                         _color1 = Colors.amber;
                         _color2 = Colors.red[300];
+                        _shadow = 8;
                       });
                       if (_formKey.currentState.validate()) {
                         progressDialog.show();
@@ -240,38 +243,43 @@ class _HomeState extends State<Home> {
                           _label = _controllerLabel.text;
                         });
                         List<InfoModel> data =
-                            await _trackingService.track(_trackingId, _service);
+                          await _trackingService.track(_trackingId, _service);
 
-                        print(data);
-
-                        await progressDialog.hide();
-                        setState(() {
-                          _controllerTrackingId.text = '';
-                          _controllerLabel.text = '';
-                          dropdownValue = options[0];
-                        });
-                        if (data.isEmpty)
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => Error()));
-                        else {
-                          DatabaseHelper databaseHelper = widget.databaseHelper;
-                          DatabaseModel databaseModel = DatabaseModel(
-                              id: _trackingId,
-                              label: _label,
-                              date: data[0].date,
-                              lastPlace: data[0].location,
-                              status: data[0].comment,
-                              time: data[0].time);
-                          await databaseHelper.insertInfo(databaseModel);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Details(
-                                  data, _label, _trackingId, _service)));
+                          await progressDialog.hide();
+                          setState(() {
+                            _controllerTrackingId.text = '';
+                            _controllerLabel.text = '';
+                            dropdownValue = options[0];
+                          });
+                          if (data.isEmpty)
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => Error()));
+                          else {
+                            DatabaseHelper databaseHelper = widget.databaseHelper;
+                            DatabaseModel databaseModel = DatabaseModel(
+                                id: _trackingId,
+                                label: _label,
+                                date: data[0].date,
+                                lastPlace: data[0].location,
+                                status: data[0].comment,
+                                time: data[0].time,);
+                            await databaseHelper.insertInfo(databaseModel);
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Details(
+                                    data, _label, _trackingId, _service)));
                         }
                       }
                     },
                     child: Container(
                       height: 50,
+                      margin: EdgeInsets.only(bottom: 20),
                       decoration: BoxDecoration(
+                      boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey[600],
+                              blurRadius: 10.0,
+                              offset: Offset(2, _shadow))
+                        ],
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(colors: [
                             _color1,

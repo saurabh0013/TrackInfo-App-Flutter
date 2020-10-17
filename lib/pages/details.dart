@@ -11,10 +11,10 @@ class Details extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color statusbarColor;
-    if (infoModel[0].status.toUpperCase() == 'DELIVERED' ||
-        infoModel[0].status.toUpperCase() == 'OUT FOR DELIVERY')
+    if (infoModel[0].status.substring(0,9).toUpperCase() == 'DELIVERED' ||
+        infoModel[0].status.substring(0,3).toUpperCase() == 'OUT')
       statusbarColor = Colors.green;
-    else if (infoModel[0].status.toUpperCase() == 'RETURNED')
+    else if (infoModel[0].status.substring(0,9).toUpperCase() == 'RETURNED')
       statusbarColor = Colors.red;
     else
       statusbarColor = Colors.blue;
@@ -65,10 +65,10 @@ class Details extends StatelessWidget {
                       child: Text(
                     infoModel[0].status.toUpperCase(),
                     style: TextStyle(
-                        letterSpacing: 1.8,
+                        letterSpacing: 1.4,
                         color: Colors.white,
                         fontWeight: FontWeight.w300,
-                        fontSize: 35),
+                        fontSize: 30),
                   )),
                 ),
               ),

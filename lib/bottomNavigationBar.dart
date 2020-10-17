@@ -52,19 +52,19 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           onTap: onTappedBar,
           items: [
             BottomNavigationBarItem(
-              title: Text('Add New'),
+              label: 'Add New',
               icon: Icon(Icons.add),
             ),
             BottomNavigationBarItem(
-              title: Text('Saved'),
+              label:'Saved',
               icon: Icon(Icons.favorite),
             ),
             BottomNavigationBarItem(
-              title: Text('About Us'),
+              label: 'About Us',
               icon: Icon(Icons.person),
             ),
             BottomNavigationBarItem(
-              title: Text('Support'),
+              label:'Support',
               icon: Icon(Icons.phone),
             ),
           ],

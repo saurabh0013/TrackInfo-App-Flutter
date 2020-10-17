@@ -39,7 +39,7 @@ class DatabaseHelper {
     });
   }
 
-  void removeInfo(String id)async {
-    await db.delete('infos', where: '$id=?',whereArgs: [id]);
+  void removeInfo(String id) async {
+    await db.delete('infos', where: 'id=?', whereArgs: [id]);
   }
 }
