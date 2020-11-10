@@ -7,6 +7,7 @@ import 'package:track_info/pages/details.dart';
 import 'package:track_info/services/trackingService.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:track_info/pages/error.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   final DatabaseHelper databaseHelper;
@@ -39,7 +40,7 @@ class _HomeState extends State<Home> {
   ProgressDialog progressDialog;
   TextEditingController _controllerTrackingId = TextEditingController();
   TextEditingController _controllerLabel = TextEditingController();
-  double _shadow = 8;
+  double _shadow = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         progressWidget: CircularProgressIndicator(
           backgroundColor: Colors.white,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.amber[600]),
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.orange[400]),
         ),
         elevation: 10.0,
         insetAnimCurve: Curves.easeInOut,
@@ -70,7 +71,7 @@ class _HomeState extends State<Home> {
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: <
               Widget>[
             Container(
-              color: Colors.amber[600],
+              color: Colors.orange[400],
               child: Padding(
                 padding: const EdgeInsets.only(top: 40, bottom: 40),
                 child: Column(
@@ -112,8 +113,8 @@ class _HomeState extends State<Home> {
                         boxShadow: [
                           BoxShadow(
                               color: Colors.orange[200],
-                              blurRadius: 10.0,
-                              offset: Offset(0, 5))
+                              blurRadius: 3,
+                              offset: Offset(0, 2))
                         ]),
                     child: Form(
                       key: _formKey,
@@ -157,7 +158,7 @@ class _HomeState extends State<Home> {
                                 value: value,
                                 child: Text(value,
                                     style: TextStyle(
-                                        color: Colors.orange,
+                                        color: Colors.orange[400],
                                         fontWeight: FontWeight.bold,
                                         fontSize: 25)),
                               );
@@ -225,15 +226,15 @@ class _HomeState extends State<Home> {
                   child: GestureDetector(
                     onTapDown: (_) {
                       setState(() {
-                        _color1 = Colors.green;
-                        _color2 = Colors.blue[200];
+                        // _color1 = Colors.green;
+                        // _color2 = Colors.blue[200];
                         _shadow = 0;
                       });
                     },
                     onTapUp: (_) async {
                       setState(() {
-                        _color1 = Colors.amber;
-                        _color2 = Colors.red[300];
+                        // _color1 = Colors.amber;
+                        // _color2 = Colors.red[300];
                         _shadow = 8;
                       });
                       if (_formKey.currentState.validate()) {
@@ -242,8 +243,19 @@ class _HomeState extends State<Home> {
                           _trackingId = _controllerTrackingId.text.trim();
                           _label = _controllerLabel.text;
                         });
-                        List<InfoModel> data =
-                          await _trackingService.track(_trackingId, _service);
+                        if (_service == 'Ecom Express') {
+                          await progressDialog.hide();
+                          await launch(
+                              'https://ecomexpress.in/tracking/?awb_field=$_trackingId');
+
+                          setState(() {
+                            _controllerTrackingId.text = '';
+                            _controllerLabel.text = '';
+                            dropdownValue = options[0];
+                          });
+                        } else {
+                          List<InfoModel> data = await _trackingService.track(
+                              _trackingId, _service);
 
                           await progressDialog.hide();
                           setState(() {
@@ -252,21 +264,24 @@ class _HomeState extends State<Home> {
                             dropdownValue = options[0];
                           });
                           if (data.isEmpty)
-                            Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => Error()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Error()));
                           else {
-                            DatabaseHelper databaseHelper = widget.databaseHelper;
+                            DatabaseHelper databaseHelper =
+                                widget.databaseHelper;
                             DatabaseModel databaseModel = DatabaseModel(
                                 id: _trackingId,
                                 label: _label,
                                 date: data[0].date,
                                 lastPlace: data[0].location,
                                 status: data[0].comment,
-                                time: data[0].time,);
+                                time: data[0].time,
+                                service: _service);
                             await databaseHelper.insertInfo(databaseModel);
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Details(
                                     data, _label, _trackingId, _service)));
+                          }
                         }
                       }
                     },
@@ -274,12 +289,12 @@ class _HomeState extends State<Home> {
                       height: 50,
                       margin: EdgeInsets.only(bottom: 20),
                       decoration: BoxDecoration(
-                      boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey[600],
-                              blurRadius: 10.0,
-                              offset: Offset(2, _shadow))
-                        ],
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey[600],
+                                blurRadius: _shadow,
+                                offset: Offset(0, 0))
+                          ],
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(colors: [
                             _color1,

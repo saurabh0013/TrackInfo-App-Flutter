@@ -37,6 +37,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+//     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+//   statusBarColor: Colors.grey[900], //or set color with: Color(0xFF0000FF)
+// ));
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: _children[_currentIndex],
@@ -44,7 +47,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           elevation: 50,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
-          backgroundColor: Colors.amber[600],
+          backgroundColor: Colors.orange[400],
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white.withOpacity(.60),
           selectedFontSize: 18,

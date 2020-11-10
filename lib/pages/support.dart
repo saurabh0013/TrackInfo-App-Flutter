@@ -11,7 +11,7 @@ class Support extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              color: Colors.amber[600],
+              color: Colors.orange[400],
               child: Padding(
                 padding: const EdgeInsets.only(top: 40, bottom: 40),
                 child: Column(
@@ -76,7 +76,7 @@ class Support extends StatelessWidget {
                           ]),
                       child: Column(children: [
                         Text(
-                          'TrackInfo Customer Support',
+                          'TrackInfo App  Support',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -87,7 +87,7 @@ class Support extends StatelessWidget {
                             size: 20,
                           ),
                           SizedBox(width: 20),
-                          Text('Hellpline number : 986376879',
+                          Text('Hellpline number : XXXXXXXXXX',
                               style: TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.w500))
                         ]),
@@ -106,45 +106,56 @@ class Support extends StatelessWidget {
                       ]),
                     ),
                     SizedBox(height: 10),
-                    Icon(Icons.keyboard_arrow_down),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: _complaint,
+                            child: Container(
+                              alignment: Alignment.bottomRight,
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.question_answer,
+                                    color: Colors.red,
+                                    size: 35,
+                                  ),
+                                  Text('Need help?',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15,
+                                          color: Colors.red))
+                                ],
+                              ),
                             ),
-                            RaisedButton.icon(
-                                onPressed: _complaint,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                color: Colors.red,
-                                label: Text('Need Help?      ',
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                                icon: Icon(Icons.question_answer,
-                                    color: Colors.white)),
-                            SizedBox(
-                              height: 5,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          GestureDetector(
+                            onTap: _feedback,
+                            child: Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.library_books,
+                                    color: Colors.blue,
+                                    size: 35,
+                                  ),
+                                  Text('Feedback',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15,
+                                          color: Colors.blue))
+                                ],
+                              ),
                             ),
-                            RaisedButton.icon(
-                                onPressed: _feedback,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                color: Colors.blue,
-                                label: Text('Give Feedback!',
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                                icon: Icon(Icons.library_books,
-                                    color: Colors.white)),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

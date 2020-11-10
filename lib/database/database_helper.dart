@@ -9,7 +9,7 @@ class DatabaseHelper {
       join(await getDatabasesPath(), 'infos.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE infos(id TEXT PRIMARY KEY, label TEXT, lastPlace TEXT,status TEXT,date TEXT,time TEXT)",
+          "CREATE TABLE infos(id TEXT PRIMARY KEY, label TEXT, lastPlace TEXT,status TEXT,date TEXT,time TEXT, service TEXT)",
         );
       },
       version: 2,
@@ -35,7 +35,8 @@ class DatabaseHelper {
           label: maps[i]['label'],
           lastPlace: maps[i]['lastPlace'],
           status: maps[i]['status'],
-          time: maps[i]['time']);
+          time: maps[i]['time'],
+          service: maps[i]['service']);
     });
   }
 

@@ -10,20 +10,27 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _statusbar = '';
+
     Color statusbarColor;
-    if (infoModel[0].status.substring(0,9).toUpperCase() == 'DELIVERED' ||
-        infoModel[0].status.substring(0,3).toUpperCase() == 'OUT')
+    if (infoModel[0].status.substring(0, 9).toUpperCase() == 'DELIVERED' ||
+        infoModel[0].status.substring(0, 3).toUpperCase() == 'OUT') {
       statusbarColor = Colors.green;
-    else if (infoModel[0].status.substring(0,9).toUpperCase() == 'RETURNED')
+      _statusbar = infoModel[0].status.toUpperCase();
+    } else if (infoModel[0].status.substring(0, 9).toUpperCase() ==
+        'RETURNED') {
       statusbarColor = Colors.red;
-    else
+      _statusbar = infoModel[0].status.toUpperCase();
+    } else {
       statusbarColor = Colors.blue;
+      _statusbar = 'IN TRANSIT';
+    }
     return Scaffold(
+        // backgroundColor: Colors.blueGrey[900],
         appBar: AppBar(
           title: Text(label),
-          backgroundColor: Colors.amber[600],
+          backgroundColor: Colors.orange[400],
         ),
-    
         body: Column(
           children: [
             Container(
@@ -43,7 +50,7 @@ class Details extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         )),
                     Container(
-                        color: Colors.grey[800],
+                        color: Colors.grey[700],
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 18),
                         child: Text(
@@ -63,7 +70,7 @@ class Details extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Center(
                       child: Text(
-                    infoModel[0].status.toUpperCase(),
+                    _statusbar,
                     style: TextStyle(
                         letterSpacing: 1.4,
                         color: Colors.white,
@@ -108,24 +115,24 @@ class Details extends StatelessWidget {
                                       child: Text(infoModel[index].comment,
                                           style: TextStyle(
                                               color: Colors.grey[900],
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 17))),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18))),
                                   Container(
                                       padding:
                                           EdgeInsets.only(left: 10, bottom: 5),
                                       child: Text(
-                                          'Date : ${infoModel[index].date}, Time: ${infoModel[index].time}',
+                                          '${infoModel[index].date}, ${infoModel[index].time}',
                                           style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey[800],
+                                              fontWeight: FontWeight.normal,
                                               fontSize: 15))),
                                   Container(
                                       padding:
                                           EdgeInsets.only(left: 10, bottom: 5),
                                       child: Text(infoModel[index].location,
                                           style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey[800],
+                                              fontWeight: FontWeight.normal,
                                               fontSize: 17))),
                                 ])
                           ],

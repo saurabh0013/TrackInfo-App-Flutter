@@ -5,8 +5,9 @@ class DatabaseModel {
   final String lastPlace;
   final String date;
   final String time;
+  final String service;
   DatabaseModel(
-      {this.id, this.label, this.status, this.lastPlace, this.date, this.time});
+      {this.id, this.label, this.status, this.lastPlace, this.date, this.time, this.service});
   Map<String, dynamic> toMap() {
     return ({
       'id': id,
@@ -14,7 +15,8 @@ class DatabaseModel {
       'status': status,
       'lastPlace': lastPlace,
       'date': date,
-      'time': time
+      'time': time,
+      'service' : service
     });
   }
 }
