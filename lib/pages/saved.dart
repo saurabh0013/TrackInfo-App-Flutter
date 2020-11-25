@@ -75,10 +75,6 @@ class _SavedState extends State<Saved> {
 
   Widget savedView() {
     return Container(
-      constraints: BoxConstraints.expand(),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/background.jpg"), fit: BoxFit.cover)),
       child: FadeAnimation(
         0.2,
         Center(

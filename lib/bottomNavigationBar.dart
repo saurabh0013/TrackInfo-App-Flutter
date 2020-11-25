@@ -5,10 +5,10 @@ import 'package:track_info/pages/home.dart';
 import 'package:track_info/pages/saved.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
-  final  databaseHelper;
+  final databaseHelper;
 
-   MyBottomNavigationBar({Key key, this.databaseHelper}) : super(key: key);
-  
+  MyBottomNavigationBar({Key key, this.databaseHelper}) : super(key: key);
+
   @override
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
@@ -24,8 +24,8 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         databaseHelper: widget.databaseHelper,
       ),
       Saved(databaseHelper: widget.databaseHelper),
-      AboutUs(),
-      Support()
+      MyAboutUs(),
+      MyFeedback()
     ];
   }
 
@@ -59,7 +59,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
               icon: Icon(Icons.add),
             ),
             BottomNavigationBarItem(
-              label:'Saved',
+              label: 'Saved',
               icon: Icon(Icons.favorite),
             ),
             BottomNavigationBarItem(
@@ -67,7 +67,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
               icon: Icon(Icons.person),
             ),
             BottomNavigationBarItem(
-              label:'Support',
+              label: 'Support',
               icon: Icon(Icons.phone),
             ),
           ],

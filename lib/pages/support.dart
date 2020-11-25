@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:track_info/animations/FadeAnimation.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
+import 'package:wiredash/wiredash.dart';
+
+class MyFeedback extends StatelessWidget {
+  final _navigatorkey = GlobalKey<NavigatorState>();
+  @override
+  Widget build(BuildContext context) {
+    return Wiredash(
+      secret: '7l3zqbhgcvzt9cr1od7u1fcbsd16vcwr',
+      projectId: 'trackinfo-app-5m64eqx',
+      navigatorKey: _navigatorkey,
+      child: MaterialApp(
+        navigatorKey: _navigatorkey,
+        home: Support(),
+      ),
+    );
+  }
+}
 
 class Support extends StatelessWidget {
   @override
@@ -106,57 +123,6 @@ class Support extends StatelessWidget {
                       ]),
                     ),
                     SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: _complaint,
-                            child: Container(
-                              alignment: Alignment.bottomRight,
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.question_answer,
-                                    color: Colors.red,
-                                    size: 35,
-                                  ),
-                                  Text('Need help?',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15,
-                                          color: Colors.red))
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          GestureDetector(
-                            onTap: _feedback,
-                            child: Container(
-                              alignment: Alignment.bottomLeft,
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.library_books,
-                                    color: Colors.blue,
-                                    size: 35,
-                                  ),
-                                  Text('Feedback',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15,
-                                          color: Colors.blue))
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -164,26 +130,30 @@ class Support extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.orange[400],
+          onPressed: () => Wiredash.of(context).show(),
+          child: Icon(Icons.question_answer_outlined, color: Colors.white)),
     );
   }
 }
 
-void _complaint() async {
-  const mailUrl =
-      'mailto:help.trackinfoapp@gmail.com?subject= I Need help with Trackinfo App&body=';
-  try {
-    await launch(mailUrl);
-  } catch (e) {
-    print('Could not launch url');
-  }
-}
+// void _complaint() async {
+//   const mailUrl =
+//       'mailto:help.trackinfoapp@gmail.com?subject= I Need help with Trackinfo App&body=';
+//   try {
+//     await launch(mailUrl);
+//   } catch (e) {
+//     print('Could not launch url');
+//   }
+// }
 
-void _feedback() async {
-  const mailUrl =
-      'mailto:help.trackinfoapp@gmail.com?subject=Feedback regarding TrackInfo App&body=';
-  try {
-    await launch(mailUrl);
-  } catch (e) {
-    print('Could not launch url');
-  }
-}
+// void _feedback() async {
+//   const mailUrl =
+//       'mailto:help.trackinfoapp@gmail.com?subject=Feedback regarding TrackInfo App&body=';
+//   try {
+//     await launch(mailUrl);
+//   } catch (e) {
+//     print('Could not launch url');
+//   }
+// }

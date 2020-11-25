@@ -1,11 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:track_info/animations/FadeAnimation.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wiredash/wiredash.dart';
+
+class MyAboutUs extends StatelessWidget {
+  final _navigatorkey = GlobalKey<NavigatorState>();
+  @override
+  Widget build(BuildContext context) {
+    return Wiredash(
+      secret: '7l3zqbhgcvzt9cr1od7u1fcbsd16vcwr',
+      projectId: 'trackinfo-app-5m64eqx',
+      navigatorKey: _navigatorkey,
+      child: MaterialApp(
+        navigatorKey: _navigatorkey,
+        home: AboutUs(),
+      ),
+    );
+  }
+}
 
 class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.orange[400],
+          onPressed: () => Wiredash.of(context).show(),
+          child: Icon(Icons.question_answer_outlined, color: Colors.white)),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -48,7 +69,7 @@ class AboutUs extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      "This App is written in Dart language using Flutter SDK which is an open-source UI software development kit created by Google. Using this app you can get tracking details of some widely used courier services in India from in one app. API's used in this app is written in Node.js which is a JavaScript library. Web scraping is used to scrape data from the courier websites.\n\nTo get source coder of this app click on the given Github icon at the bottom. The sorce code for the App and APIs is available on Github.\n\nTo appericate the work of our developers kindly give us your valuable feedback in the support page.",
+                      "This App is written in Dart language using Flutter SDK which is an open-source UI software development kit created by Google. Using this app you can get tracking details of some widely used courier services in India from one app. API's used in this app is written in Node.js which is a JavaScript library. Web scraping is used to scrape data from the courier websites.\n\nTo get source code of this app click on the Github icon at the bottom. The sorce code for the App and APIs is available on Github.\n\nTo appericate the work of our developers kindly give us your valuable feedback by tapping the chat button .",
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,

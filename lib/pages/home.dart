@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:track_info/animations/FadeAnimation.dart';
 import 'package:track_info/database/database_helper.dart';
@@ -36,11 +38,19 @@ class _HomeState extends State<Home> {
   Color _color2 = Colors.red[300];
   String _trackingId = '';
   String _service;
+  final _scrollcontroller = ScrollController();
   final _trackingService = TrackingService();
   ProgressDialog progressDialog;
   TextEditingController _controllerTrackingId = TextEditingController();
   TextEditingController _controllerLabel = TextEditingController();
   double _shadow = 18;
+  @override
+  void dispose() {
+    _controllerLabel.dispose();
+    _controllerTrackingId.dispose();
+    _scrollcontroller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +75,8 @@ class _HomeState extends State<Home> {
     //  print(_service);
     //  print(_trackingId);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
+        controller: _scrollcontroller,
         child: Container(
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: <
               Widget>[
@@ -178,6 +188,14 @@ class _HomeState extends State<Home> {
                               }
                               return null;
                             },
+                            onTap: () {
+                              Timer(Duration(milliseconds: 200), () {
+                                _scrollcontroller.animateTo(
+                                    _scrollcontroller.position.maxScrollExtent,
+                                    duration: Duration(milliseconds: 400),
+                                    curve: Curves.decelerate);
+                              });
+                            },
                             controller: _controllerTrackingId,
                             style: TextStyle(fontSize: 23),
                             showCursor: true,
@@ -197,6 +215,14 @@ class _HomeState extends State<Home> {
                               border: Border(
                                   bottom: BorderSide(color: Colors.grey[100]))),
                           child: TextField(
+                            onTap: () {
+                              Timer(Duration(milliseconds: 200), () {
+                                _scrollcontroller.animateTo(
+                                    _scrollcontroller.position.maxScrollExtent,
+                                    duration: Duration(milliseconds: 400),
+                                    curve: Curves.decelerate);
+                              });
+                            },
                             controller: _controllerLabel,
                             style: TextStyle(fontSize: 23),
                             showCursor: true,
@@ -244,9 +270,10 @@ class _HomeState extends State<Home> {
                           _label = _controllerLabel.text;
                         });
                         if (_service == 'Ecom Express') {
-                          await progressDialog.hide();
                           await launch(
                               'https://ecomexpress.in/tracking/?awb_field=$_trackingId');
+                          await Future.delayed(Duration(seconds: 1));
+                          await progressDialog.hide();
 
                           setState(() {
                             _controllerTrackingId.text = '';
@@ -265,7 +292,7 @@ class _HomeState extends State<Home> {
                           });
                           if (data.isEmpty)
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Error()));
+                                builder: (context) => MyError()));
                           else {
                             DatabaseHelper databaseHelper =
                                 widget.databaseHelper;
