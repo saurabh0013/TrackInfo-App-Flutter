@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:track_info/animations/FadeAnimation.dart';
+import 'package:track_info/bottomNavigationBar.dart';
+
 import 'package:wiredash/wiredash.dart';
 
 class MyError extends StatelessWidget {
@@ -27,13 +29,26 @@ class Error extends StatelessWidget {
           onPressed: () => Wiredash.of(context).show(),
           child: Icon(Icons.question_answer_outlined, color: Colors.white)),
       appBar: AppBar(
-        title: Text(
-          "Details Not Found",
-          style: TextStyle(
-              fontSize: 25,
-              letterSpacing: 1.1,
-              color: Colors.white,
-              fontWeight: FontWeight.bold),
+        title: Row(
+          children: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => MyBottomNavigationBar()));
+                },
+                child: Icon(Icons.arrow_back)),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              "Details Not Found",
+              style: TextStyle(
+                  fontSize: 25,
+                  letterSpacing: 1.1,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
         backgroundColor: Colors.amber[600],
       ),
@@ -99,7 +114,7 @@ class Error extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        "Either your Tracking Id is invalid or the service you are requesting is Currently not Supported.",
+                        "Either your Tracking Id is invalid or the service you are requesting is Currently not Supported.\n\n",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,

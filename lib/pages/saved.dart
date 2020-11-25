@@ -61,13 +61,7 @@ class _SavedState extends State<Saved> {
       ),
       body: databaseModel == null
           ? Center(
-              child: Container(
-                  constraints: BoxConstraints.expand(),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/background.jpg"),
-                          fit: BoxFit.cover)),
-                  child: CircularProgressIndicator()),
+              child: Container(child: CircularProgressIndicator()),
             )
           : savedView(),
     );
@@ -78,102 +72,111 @@ class _SavedState extends State<Saved> {
       child: FadeAnimation(
         0.2,
         Center(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-            itemCount: databaseModel.length,
-            itemBuilder: (_, index) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0)),
-                color: Colors.white,
-                elevation: 10,
-                shadowColor: Colors.grey[400],
-                child: ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Tracking Id : ',
-                        style: TextStyle(
-                            fontSize: 23.5,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.blue[800]),
-                      ),
-                      Text(
-                        databaseModel[index].id,
-                        style: TextStyle(
-                            fontSize: 23.5,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.green),
-                      ),
-                    ],
-                  ),
-                  subtitle: Column(
-                    children: [
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Label : ',
-                              style: TextStyle(
-                                  fontSize: 23.5,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.blue[800])),
-                          Text(databaseModel[index].label,
-                              style: TextStyle(
-                                  fontSize: 23.5,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.green))
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Courier : ',
-                              style: TextStyle(
-                                  fontSize: 23.5,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.blue[800])),
-                          Text(databaseModel[index].service,
-                              style: TextStyle(
-                                  fontSize: 23.5,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.green))
-                        ],
-                      )
-                    ],
-                  ),
-                  onTap: () async {
-                    progressDialog.show();
-                    List<InfoModel> data = await _trackingService.track(
-                        databaseModel[index].id, databaseModel[index].service);
-                    await progressDialog.hide();
-                    await progressDialog.hide();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Details(
-                            data,
-                            databaseModel[index].label,
-                            databaseModel[index].id,
-                            databaseModel[index].service)));
-                  },
-                  onLongPress: () async {
-                    final ConfirmAction action =
-                        await _asyncConfirmDialog(context);
+          child: Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/background.jpg"),
+                    fit: BoxFit.cover)),
+            child: ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              itemCount: databaseModel.length,
+              itemBuilder: (_, index) {
+                return Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
+                  color: Colors.white,
+                  elevation: 10,
+                  shadowColor: Colors.grey[400],
+                  child: ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Tracking Id : ',
+                          style: TextStyle(
+                              fontSize: 23.5,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.blue[800]),
+                        ),
+                        Text(
+                          databaseModel[index].id,
+                          style: TextStyle(
+                              fontSize: 23.5,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.green),
+                        ),
+                      ],
+                    ),
+                    subtitle: Column(
+                      children: [
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Label : ',
+                                style: TextStyle(
+                                    fontSize: 23.5,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.blue[800])),
+                            Text(databaseModel[index].label,
+                                style: TextStyle(
+                                    fontSize: 23.5,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.green))
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Courier : ',
+                                style: TextStyle(
+                                    fontSize: 23.5,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.blue[800])),
+                            Text(databaseModel[index].service,
+                                style: TextStyle(
+                                    fontSize: 23.5,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.green))
+                          ],
+                        )
+                      ],
+                    ),
+                    onTap: () async {
+                      progressDialog.show();
+                      List<InfoModel> data = await _trackingService.track(
+                          databaseModel[index].id,
+                          databaseModel[index].service);
+                      await progressDialog.hide();
+                      await progressDialog.hide();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Details(
+                              data,
+                              databaseModel[index].label,
+                              databaseModel[index].id,
+                              databaseModel[index].service)));
+                    },
+                    onLongPress: () async {
+                      final ConfirmAction action =
+                          await _asyncConfirmDialog(context);
 
-                    if (action == ConfirmAction.Accept) {
-                      widget.databaseHelper.removeInfo(databaseModel[index].id);
-                      setState(() {
-                        loadData();
-                      });
-                    } else
-                      return;
-                  },
-                ),
-              );
-            },
+                      if (action == ConfirmAction.Accept) {
+                        widget.databaseHelper
+                            .removeInfo(databaseModel[index].id);
+                        setState(() {
+                          loadData();
+                        });
+                      } else
+                        return;
+                    },
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
